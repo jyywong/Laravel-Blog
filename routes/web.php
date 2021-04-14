@@ -3,7 +3,9 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostDetailController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\BoardController;
+use App\Http\Controllers\TopicController;
+use App\Http\Controllers\TopicCreatorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,5 +27,17 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/posts', [PostController::class, 'index'])->name('posts');
-Route::get('/posts/{post}', [PostDetailController::class, 'index'])->name('postDetail');
+
+Route::get('/boards', [BoardController::class, 'listBoards'])->name('board');
+
+Route::get('/{board}/topics', [TopicController::class, 'listTopics'])->name('topic');
+
+Route::get('/{board}/topics/create', [TopicCreatorController::class, 'index'])->name('createTopic');
+Route::post('/{board}/topics/create', [TopicCreatorController::class, 'createTopic']);
+
+
+
+Route::get('/{board}/{topic}/posts', [PostController::class, 'index'])->name('posts');
+Route::post('/{board}/{topic}/posts', [PostController::class, 'post']);
+
+// Route::get('/posts/{post}', [PostDetailController::class, 'index'])->name('postDetail');

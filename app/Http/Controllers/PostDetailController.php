@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class PostDetailController extends Controller
 {
     public function index(Post $post){
-        return view('postDetail', [
+        return view('posts.postDetail', [
             'post'=>$post
         ]);
     }
