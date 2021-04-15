@@ -9,6 +9,10 @@ use App\Models\Topic;
 
 class TopicCreatorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
     public function index(Board $board){
         $context = [
             'board'=>$board

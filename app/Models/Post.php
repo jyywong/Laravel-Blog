@@ -12,7 +12,8 @@ class Post extends Model
         'title',
         'body',
         'user_id',
-        'topic_id'
+        'topic_id',
+        'isOP'
 
     ];
     public function user(){
@@ -20,5 +21,8 @@ class Post extends Model
     }
     public function topic(){
         return $this->belongsTo(Topic::class);
+    }
+    public function likes(){
+        return $this->hasMany(Like::class);
     }
 }

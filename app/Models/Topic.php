@@ -16,4 +16,9 @@ class Topic extends Model
     public function board(){
         return $this->belongsTo(Board::class);
     }
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+   
+        
 }

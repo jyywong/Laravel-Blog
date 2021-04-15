@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\Board;
 use App\Models\Topic;
+use App\Models\Post;
 
-class PostController extends Controller
+
+class PostReplyController extends Controller
 {
-    public function index(Board $board, Topic $topic){
+    public function index(Board $board, Topic $topic, Post $post){
+        $replyPost = $post;
         $originalPost = Post::where('topic_id', '=', $topic->id)
         ->first();
         // Need to implement eager loading. Lots of queries are being wasted.
@@ -18,7 +20,8 @@ class PostController extends Controller
             'board'=>$board,
             'topic'=>$topic,
             'OP'=>$originalPost,
-            'posts'=>$posts
+            'posts'=>$posts,
+            'replyPost'=>$replyPost
         ];
 
         // A topic without a post creates an error. However, a topic should not exist without a post anyway
@@ -42,26 +45,9 @@ class PostController extends Controller
         // }])->get();
 
         
-        return view('posts.posts', $context);
+        return view('posts.postReply', $context);
     }
-
-    public function post(Request $request, Board $board, Topic $topic){
-        $originalPost = Post::where('topic_id', '=', $topic->id)->where('isOP', true)->get();
-        $this->validate($request, [
-            'postBody'=>'required'
-        ]);
-        // dd($request->postBody);
-        $postBody = strip_tags($request->postBody);
-        
-        Post::create([
-            'title'=>'Default title',
-            'body' => $postBody,
-            'user_id'=> $request->user()->id,
-            'topic_id'=>$topic->id,
-            'isOP'=> false,
-            'replying_to_id'=>$originalPost->id
-
-        ]);
-        return back();
+    public function post(Request $request, Board $board, Topic $topic, Post $post){
+        dd('hello');
     }
 }

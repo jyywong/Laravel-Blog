@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
+    <script src="https://unpkg.com/feather-icons"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
     <title>Hello, world!</title>
@@ -26,9 +27,7 @@
 
 
               
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-              </li>
+              
             </ul>
             <form class="d-flex mx-auto" style="position: absolute; left:50%; transform: translateX(-50%);">
               <input class="form-control me-2" style="width: 20rem"="search" placeholder="Search" aria-label="Search">
@@ -52,8 +51,9 @@
               </li>
                 
             @else
-            <a href="{{route('register')}}" class="btn btn-success"> Sign up </a>
-            <a href="{{route('login')}}" class="btn btn-primary mx-2"> Login </a>
+            <a href="{{route('login')}}" class="btn btn-primary "> Login </a>
+            <a href="{{route('register')}}" class="btn btn-success mx-2"> Sign up </a>
+            
 
             @endif
             

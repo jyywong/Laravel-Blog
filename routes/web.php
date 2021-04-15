@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TopicCreatorController;
+use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\PostReplyController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,4 +42,9 @@ Route::post('/{board}/topics/create', [TopicCreatorController::class, 'createTop
 Route::get('/{board}/{topic}/posts', [PostController::class, 'index'])->name('posts');
 Route::post('/{board}/{topic}/posts', [PostController::class, 'post']);
 
+Route::get('/{board}/{topic}/{post}/reply', [PostReplyController::class, 'index'])->name('postReply');
+Route::post('/{board}/{topic}/{post}/reply', [PostReplyController::class, 'post']);
+
+Route::post('/{board}/{topic}/{post}/like', [PostLikeController::class, 'like'])->name('postLike');
+Route::delete('/{board}/{topic}/{post}/like', [PostLikeController::class, 'unlike']);
 // Route::get('/posts/{post}', [PostDetailController::class, 'index'])->name('postDetail');
