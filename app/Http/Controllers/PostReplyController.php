@@ -48,6 +48,20 @@ class PostReplyController extends Controller
         return view('posts.postReply', $context);
     }
     public function post(Request $request, Board $board, Topic $topic, Post $post){
-        dd('hello');
+        $this->validate($request, [
+            'postBody'=>'required'
+        ]);
+        $postBody = strip_tags($request->postBody);
+        
+        Post::create([
+            'title'=>'Default title',
+            'body' => $postBody,
+            'user_id'=> $request->user()->id,
+            'topic_id'=>$topic->id,
+            'isOP'=> false,
+            'replying_to_id'=>$post->id
+
+        ]);
+        return redirect()->route('posts', [$board, $topic]);
     }
 }

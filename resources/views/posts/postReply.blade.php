@@ -11,116 +11,77 @@
             </ol>
           </nav>
     </div>
-    <div class="container">
-    
-    </div>
-            <div class="card bg-light mb-4">
-                <div class="col border-start ">
-                    <div class="card-header p-3">
-                        <h4>{{$topic->topic}}</h4>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-muted">Posted by {{$OP->user->name}}</p>
-                        <p class="card-text">{{$OP->body}}</p>
-                    </div>
-                    <div class="card-footer">
-                        <form action="{{route('postLike', [$board, $topic, $OP])}}" method="post" style="display: inline">
-                            @csrf
-                            <button class="btn p-0" type="submit">
-                                <i stroke="blue" data-feather="arrow-up"></i>
-                            </button>
-                        </form>
-                        <small class="mx-2"> {{$OP->likes()->count()}}</small>
-                        <form action="{{route('postLike', [$board, $topic, $OP])}}" method="post" style="display: inline">
-                            @csrf
-                            @method('delete')
-                            <button class="btn p-0" type="submit">
-                                <i stroke="red" data-feather="arrow-down"></i>
-                            </button>
-                        </form>
-                            
-                            <a href="#" style="text-decoration: none;color: inherit">
-                                <i data-feather="share-2" style="margin-left: 30px"></i>
-                                <small>Share</small>
-                            </a>
-                            <a href="#" style="text-decoration: none;color: inherit">
-                                <i data-feather="flag" style="margin-left: 30px"></i>
-                                <small>Report</small>
-                            </a>
-                        
-                        
-                    </div>
-                </div>
-            </div>
-            @auth
-                <form action="{{route('posts', [$board, $topic])}}" method="post">
-                    @csrf
-                    <div class="input-group mb-3">
-                        <textarea readonly type="text" class="form-control @error('postBody')is-invalid @enderror" placeholder="Your reply" name="postBody"></textarea>
-                        <button class="btn btn-outline-success" type="submit" id="button-addon2">Submit</button>
-                    </div>
-                </form>
-            @endauth
-            @guest
+{{-- Original Post --}}
+    @include('posts.components.postOPComp')
+    @auth
+        <form action="{{route('posts', [$board, $topic])}}" method="post">
+            @csrf
             <div class="input-group mb-3">
-                <textarea readonly type="text" class="form-control " placeholder="Log in or sign up to leave a comment" name="postBody"></textarea>
-                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Login</button>
-                <button class="btn btn-outline-success" type="submit" id="button-addon2">Sign up</button>
+                <textarea readonly type="text" class="form-control @error('postBody')is-invalid @enderror" placeholder="Your reply" name="postBody"></textarea>
+                <button class="btn btn-outline-success" type="submit" id="button-addon2">Submit</button>
             </div>
-            @endguest
+        </form>
+    @endauth
+    @guest
+    <div class="input-group mb-3">
+        <textarea readonly type="text" class="form-control " placeholder="Log in or sign up to leave a comment" name="postBody"></textarea>
+        <button class="btn btn-outline-primary" type="submit" id="button-addon2">Login</button>
+        <button class="btn btn-outline-success" type="submit" id="button-addon2">Sign up</button>
+    </div>
+    @endguest
+{{-- End Original Post --}}
                 
-
-
-
-
-            <div class="container">
-                
-                <h3>
-                    Replies
-                </h3>
-            </div>
+{{-- Replies --}}
+    <div class="container">
+        
+        <h3>
+            Replies
+        </h3>
+    </div>
             
 
 
-        @if ($posts)
-                @foreach ($posts as $post)
-                    @if ( $post->id == $replyPost->id)
-                        <div class="card border-info mb-2" >
-                            <div class="card-body">
-                                <p class="fw-lighter my-0 " style="display: inline-block"><small>Posted by {{$post->user->name}}</small></p>
-                                <p class="text-muted text-sm mx-2 my-0" style="display: inline-block"><small>{{$post->created_at->diffforHumans()}}</small></p>
-                                <p class="card-text">{{$post->body}}</p>
-                            
-                            </div>
-                            <div class="card-footer">
-                                <form action="{{route('postLike', [$board, $topic, $post])}}" method="post" style="display: inline">
-                                    @csrf
-                                    <button class="btn p-0" type="submit">
-                                        <i stroke="blue" data-feather="arrow-up"></i>
-                                    </button>
-                                </form>
-                                <small class="mx-2"> {{$post->likes()->count()}}</small>
-                                <form action="{{route('postLike', [$board, $topic, $post])}}" method="post" style="display: inline">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn p-0" type="submit">
-                                        <i stroke="red" data-feather="arrow-down"></i>
-                                    </button>
-                                </form>
-                                <a href="#" style="text-decoration: none;color: inherit">
-                                    <i data-feather="message-square" style="margin-left: 30px; width:16px; height:16px;"></i>
-                                    <a href="{{route('postReply', [$board, $topic, $post])}}"><small>Reply</small></a>
-                                </a>
-                                <a href="#" style="text-decoration: none;color: inherit">
-                                    <i data-feather="share-2" style="margin-left: 30px; width:16px; height:16px;"></i>
-                                    <small>Share</small>
-                                </a>
-                                <a href="#" style="text-decoration: none;color: inherit">
-                                    <i data-feather="flag" style="margin-left: 30px; width:16px; height:16px;"></i>
-                                    <small>Report</small>
-                                </a>
-                            </div>
+    {{-- @if ($posts)
+            @foreach ($posts as $post)
+                @if ( $post->id == $replyPost->id)
+                    <div class="card border-info mb-2" >
+                        @include('posts.components.postCardComp')
+                    </div>
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="ms-3 float-end" data-feather="corner-down-right"></i>
                         </div>
+                        <div class="col">
+                            <form action="{{route('postReply', [$board, $topic, $post])}}" method="post">
+                                @csrf
+                                <div class="input-group mb-3">
+                                    <textarea type="text" class="form-control @error('postBody')is-invalid @enderror" placeholder="Your reply" name="postBody"></textarea>
+                                    <button class="btn btn-outline-success" type="submit" id="button-addon2">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                    
+                @else
+                    <div class="card mb-2" >
+                        @include('posts.components.postCardComp')
+                    </div>
+                @endif
+            
+            @endforeach
+    @endif --}}
+
+    @if ($posts)
+            @foreach ($posts as $post)
+                @php
+                    $colInt = 1
+                @endphp
+                @if ($post->replying_to_id == $OP->id | $post->replying_to_id == null)
+                    <div class="card mb-2" >
+                        @include('posts.components.postCardComp')
+                    </div>
+                    @if ( $post->id == $replyPost->id)
                         <div class="row">
                             <div class="col-1">
                                 <i class="ms-3 float-end" data-feather="corner-down-right"></i>
@@ -136,53 +97,18 @@
                             </div>
                             
                         </div>
-                        
-                    @else
-                        <div class="card mb-2" >
-                            <div class="card-body">
-                                <p class="fw-lighter my-0 " style="display: inline-block"><small>Posted by {{$post->user->name}}</small></p>
-                                <p class="text-muted text-sm mx-2 my-0" style="display: inline-block"><small>{{$post->created_at->diffforHumans()}}</small></p>
-                                <p class="card-text">{{$post->body}}</p>
-                            
-                            </div>
-                            <div class="card-footer">
-                                <form action="{{route('postLike', [$board, $topic, $post])}}" method="post" style="display: inline">
-                                    @csrf
-                                    <button class="btn p-0" type="submit">
-                                        <i stroke="blue" data-feather="arrow-up"></i>
-                                    </button>
-                                </form>
-                                <small class="mx-2"> {{$post->likes()->count()}}</small>
-                                <form action="{{route('postLike', [$board, $topic, $post])}}" method="post" style="display: inline">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn p-0" type="submit">
-                                        <i stroke="red" data-feather="arrow-down"></i>
-                                    </button>
-                                </form>
-                                <a href="#" style="text-decoration: none;color: inherit">
-                                    <i data-feather="message-square" style="margin-left: 30px; width:16px; height:16px;"></i>
-                                    <a href="{{route('postReply', [$board, $topic, $post])}}"><small>Reply</small></a>
-                                </a>
-                                <a href="#" style="text-decoration: none;color: inherit">
-                                    <i data-feather="share-2" style="margin-left: 30px; width:16px; height:16px;"></i>
-                                    <small>Share</small>
-                                </a>
-                                <a href="#" style="text-decoration: none;color: inherit">
-                                    <i data-feather="flag" style="margin-left: 30px; width:16px; height:16px;"></i>
-                                    <small>Report</small>
-                                </a>
-                                
-                            </div>
-                        </div>
                     @endif
-               
-                @endforeach
-        @endif
+                    @include('posts.components.postReplyRecursiveFx', ['colInt' => $colInt])
+                    
+                @endif
+            @endforeach
+            
+    @endif
         
             
     
 </div>
+{{-- End replies --}}
 <script>
     feather.replace()
 </script>

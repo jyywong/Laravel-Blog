@@ -46,5 +46,7 @@ Route::get('/{board}/{topic}/{post}/reply', [PostReplyController::class, 'index'
 Route::post('/{board}/{topic}/{post}/reply', [PostReplyController::class, 'post']);
 
 Route::post('/{board}/{topic}/{post}/like', [PostLikeController::class, 'like'])->name('postLike');
-Route::delete('/{board}/{topic}/{post}/like', [PostLikeController::class, 'unlike']);
+
+Route::post('/{board}/{topic}/{post}/dislike', [PostLikeController::class, 'dislike'])->name('postDislike');
+
 // Route::get('/posts/{post}', [PostDetailController::class, 'index'])->name('postDetail');

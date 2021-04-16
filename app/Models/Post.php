@@ -13,7 +13,8 @@ class Post extends Model
         'body',
         'user_id',
         'topic_id',
-        'isOP'
+        'isOP',
+        'replying_to_id'
 
     ];
     public function user(){
@@ -24,5 +25,8 @@ class Post extends Model
     }
     public function likes(){
         return $this->hasMany(Like::class);
+    }
+    public function totalUpvotes(){
+        return ($this->likes->where('vote_type', 'up')->count()) - ($this->likes->where('vote_type', 'down')->count()) ;
     }
 }

@@ -31,14 +31,15 @@
                 {{-- <a href="{{route('postDetail', $post)}}" class="btn btn-primary">Read more</a> --}}
             </div>
             <div class="card-footer">
-                <a href="#" style="text-decoration: none;color: inherit">
+                @include('posts.components.postUpAndDownComp',['target'=>$topic->posts->where('topic_id', $topic->id)->where('isOP', true)[0]])
+                {{-- <a href="#" style="text-decoration: none;color: inherit">
                 <i stroke="blue" data-feather="arrow-up"></i>
                 </a>
                 
                 <small class="mx-2"> {{$topic->posts->where('topic_id', $topic->id)->where('isOP', true)[0]->likes->count()}} </small>
                 <a href="#" style="text-decoration: none;color: inherit">
                 <i stroke="red" data-feather="arrow-down"></i>
-                </a>
+                </a> --}}
                 <a href="#" style="text-decoration: none;color: inherit">
                     <i data-feather="message-square" style="margin-left: 30px;"></i>
                     <small>{{($topic->posts->count()-1) }} {{Str::plural('Comment', $topic->posts->count()-1)}}</small>

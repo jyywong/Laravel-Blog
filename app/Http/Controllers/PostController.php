@@ -46,11 +46,10 @@ class PostController extends Controller
     }
 
     public function post(Request $request, Board $board, Topic $topic){
-        $originalPost = Post::where('topic_id', '=', $topic->id)->where('isOP', true)->get();
+        $originalPost = Post::where('topic_id', '=', $topic->id)->where('isOP', true)->first();
         $this->validate($request, [
             'postBody'=>'required'
         ]);
-        // dd($request->postBody);
         $postBody = strip_tags($request->postBody);
         
         Post::create([
