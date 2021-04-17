@@ -22,24 +22,20 @@ class PostController extends Controller
         ];
 
         // A topic without a post creates an error. However, a topic should not exist without a post anyway
-        if(Post::where('topic_id', '=', $topic->id)
-                        ->where('id','!=', $originalPost->id)
-                        ->get()
-                        ->count() >= 1 )
-        {     
-
-            $posts = Post::with('user')->where('topic_id', '=', $topic->id)
+        if($originalPost){
+            if(Post::where('topic_id', '=', $topic->id)
             ->where('id','!=', $originalPost->id)
-            ->get();
-            $context['posts'] = $posts;
+            ->get()
+            ->count() >= 1 )
+                {     
+                $posts = Post::with('user')->where('topic_id', '=', $topic->id)
+                ->where('id','!=', $originalPost->id)
+                ->get();
+                $context['posts'] = $posts;
+                }
         }
         
-       
-
-        // $posts = Post::with(['user' => function($query) use($originalPost, $topic){
-        //     $query->where('topic_id', '=', $topic->id)
-        //     ->where('id','!=', $originalPost->id);
-        // }])->get();
+        
 
         
         return view('posts.posts', $context);

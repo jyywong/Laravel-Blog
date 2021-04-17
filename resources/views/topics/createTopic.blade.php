@@ -14,7 +14,7 @@
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Topic body</label>
-                <textarea name="topicBody" class="form-control @error('topicBody') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3" placeholder="Your post"></textarea>
+                <textarea name="topicBody" class="ckeditor form-control @error('topicBody') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3" placeholder="Your post"></textarea>
                 </div>
             </div>
             <div class="container">
@@ -29,5 +29,10 @@
     
     
 </div>
-
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.ckeditor').ckeditor();
+    });
+</script>
 @endsection

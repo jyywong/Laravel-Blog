@@ -26,7 +26,8 @@ class TopicCreatorController extends Controller
            'topicBody'=>'required'
        ]);
        $topicTopic = strip_tags($request->topicTopic);
-       $postBody = strip_tags($request->topicBody);
+       $postBody = $request->topicBody;
+    //    $postBody = strip_tags($request->topicBody);
 
        $newTopic = Topic::create([
            'topic'=>$topicTopic,
@@ -36,7 +37,9 @@ class TopicCreatorController extends Controller
            'title'=>'Default title',
            'body'=> $postBody,
            'user_id'=>$request->user()->id,
-           'topic_id'=>$newTopic->id
+           'topic_id'=>$newTopic->id,
+           'isOP'=>true,
+        
        ]);
        return redirect()->route('posts', [$board, $newTopic]);
     }

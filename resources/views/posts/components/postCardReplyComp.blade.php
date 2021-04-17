@@ -14,9 +14,9 @@
             </div>
             <div class="card-footer">
                 @include('posts.components.postUpAndDownComp', ['target'=>$post])
-                <a href="#" style="text-decoration: none;color: inherit">
+                <a href="{{route('postReply', [$board, $topic, $post])}}" style="text-decoration: none;color: inherit">
                     <i data-feather="message-square" style="margin-left: 30px; width:16px; height:16px;"></i>
-                    <a href="{{route('postReply', [$board, $topic, $post])}}"><small>Reply</small></a>
+                    <small>Reply</small>
                 </a>
                 <a href="#" style="text-decoration: none;color: inherit">
                     <i data-feather="share-2" style="margin-left: 30px; width:16px; height:16px;"></i>

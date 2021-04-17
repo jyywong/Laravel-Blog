@@ -8,6 +8,9 @@ use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TopicCreatorController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\PostReplyController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TopicEditorController;
+use App\Http\Controllers\TopicDeleteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,7 +40,13 @@ Route::get('/{board}/topics', [TopicController::class, 'listTopics'])->name('top
 Route::get('/{board}/topics/create', [TopicCreatorController::class, 'index'])->name('createTopic');
 Route::post('/{board}/topics/create', [TopicCreatorController::class, 'createTopic']);
 
+Route::get('/{board}/{topic}/edit', [TopicEditorController::class, 'index'])->name('editTopic');
+Route::post('/{board}/{topic}/edit', [TopicEditorController::class, 'edit']);
 
+Route::get('/{board}/{topic}/delete', [TopicDeleteController::class, 'index'])->name('deleteTopic');
+Route::delete('/{board}/{topic}/delete', [TopicDeleteController::class, 'delete']);
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::get('/{board}/{topic}/posts', [PostController::class, 'index'])->name('posts');
 Route::post('/{board}/{topic}/posts', [PostController::class, 'post']);

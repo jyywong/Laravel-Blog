@@ -19,6 +19,9 @@ class Topic extends Model
     public function posts(){
         return $this->hasMany(Post::class);
     }
+    public function OP(){
+        return $this->posts->where('isOP', true)->first();
+    }
    
         
 }

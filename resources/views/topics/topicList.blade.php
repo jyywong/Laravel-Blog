@@ -24,23 +24,17 @@
     </div>
     @if (!$topics->isEmpty())
         @foreach ($topics as $topic)
+
+        
         <div class="card m-2">
             <div class="card-body">
+                <p class="text-muted mb-0"><small>Posted by u/{{$topic->OP()->user->name}} {{$topic->OP()->created_at->diffforHumans()}}</small></p>
                 <a href="{{route('posts', [$board, $topic] )}}" style="text-decoration: none;color:inherit"><h5 class="card-title">{{$topic->topic}}</h5></a>
-                <p class="text-muted"><small>{{$topic->posts->where('topic_id', $topic->id)->where('isOP', true)[0]->body}} </small></p>
-                {{-- <a href="{{route('postDetail', $post)}}" class="btn btn-primary">Read more</a> --}}
+                <p class="text-muted mb-0"><small>{{strip_tags($topic->OP()->body)}} </small></p>
             </div>
             <div class="card-footer">
                 @include('posts.components.postUpAndDownComp',['target'=>$topic->posts->where('topic_id', $topic->id)->where('isOP', true)[0]])
-                {{-- <a href="#" style="text-decoration: none;color: inherit">
-                <i stroke="blue" data-feather="arrow-up"></i>
-                </a>
-                
-                <small class="mx-2"> {{$topic->posts->where('topic_id', $topic->id)->where('isOP', true)[0]->likes->count()}} </small>
-                <a href="#" style="text-decoration: none;color: inherit">
-                <i stroke="red" data-feather="arrow-down"></i>
-                </a> --}}
-                <a href="#" style="text-decoration: none;color: inherit">
+                <a href="{{route('posts', [$board, $topic] )}}" style="text-decoration: none;color: inherit">
                     <i data-feather="message-square" style="margin-left: 30px;"></i>
                     <small>{{($topic->posts->count()-1) }} {{Str::plural('Comment', $topic->posts->count()-1)}}</small>
                 </a>
@@ -56,6 +50,9 @@
             </div>
         </div>
         @endforeach
+        <div class="container justify content-center">
+            {{$topics->withQueryString()->links()}}
+        </div>
     @else
         <div class="card m-2">
             <div class="card-body">
@@ -65,6 +62,7 @@
             </div>
         </div>
     @endif
+    
     
         
             

@@ -11,6 +11,7 @@
             </ol>
           </nav>
     </div>
+        
         @include('posts.components.postOPComp')
         @auth
             <form action="{{route('posts', [$board, $topic])}}" method="post">

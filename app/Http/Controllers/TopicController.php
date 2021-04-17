@@ -10,7 +10,7 @@ use App\Models\Post;
 class TopicController extends Controller
 {
     public function listTopics(Board $board){
-        $topics = Topic::where('board_id', '=', $board->id)->get();
+        $topics = Topic::where('board_id', '=', $board->id)->paginate(5);
         // $OP = Post::where('topic_id', $this->id)->where('isOP', true)->get();
         return view('topics/topicList', [
             'topics'=> $topics,

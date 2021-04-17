@@ -29,8 +29,8 @@
               
               
             </ul>
-            <form class="d-flex mx-auto" style="position: absolute; left:50%; transform: translateX(-50%);">
-              <input class="form-control me-2" style="width: 20rem"="search" placeholder="Search" aria-label="Search">
+            <form action="{{route('search')}}" method = "get" class="d-flex mx-auto" style="position: absolute; left:50%; transform: translateX(-50%);">
+              <input name="q" type="text" class="form-control me-2" style="width: 20rem"="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             @if (auth()->check())

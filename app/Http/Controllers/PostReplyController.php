@@ -10,6 +10,10 @@ use App\Models\Post;
 
 class PostReplyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
     public function index(Board $board, Topic $topic, Post $post){
         $replyPost = $post;
         $originalPost = Post::where('topic_id', '=', $topic->id)
