@@ -47,6 +47,9 @@ class User extends Authenticatable
     public function likes(){
         return $this->hasMany(Like::class);
     }
+    public function boards(){
+        return $this->belongsToMany(Board::class);
+    }
     public function hasLikedPost($post_id){
         return boolval($this->likes->where('post_id', $post_id)->where('vote_type', 'up')->count());
     }

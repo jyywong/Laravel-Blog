@@ -22,6 +22,13 @@ class Topic extends Model
     public function OP(){
         return $this->posts->where('isOP', true)->first();
     }
+    public function getOP(){
+        return $this->hasOne(Post::class)->where('topic_id', $this->id)->where('isOP', true);
+    }
+    public function likes(){
+        return $this->hasManyThrough(Like::class, Post::class)->where('post_id', $this->getOP->id);
+    }
+
    
-        
+    
 }

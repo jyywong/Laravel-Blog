@@ -24,7 +24,7 @@ class TopicFactory extends Factory
     {
         return [
             'topic'=>$this->faker->sentence,
-            'board_id'=> Board::factory(),
+            'board_id'=> Board::pluck('id')->random(),
         ];
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Board;
 use App\Models\Topic;
 use App\Models\Post;
-
+use App\Notifications\HasRepliedToYou;
 
 class PostReplyController extends Controller
 {
@@ -18,7 +18,7 @@ class PostReplyController extends Controller
         $replyPost = $post;
         $originalPost = Post::where('topic_id', '=', $topic->id)
         ->first();
-        // Need to implement eager loading. Lots of queries are being wasted.
+
         $posts = null;
         $context = [
             'board'=>$board,
@@ -28,7 +28,6 @@ class PostReplyController extends Controller
             'replyPost'=>$replyPost
         ];
 
-        // A topic without a post creates an error. However, a topic should not exist without a post anyway
         if(Post::where('topic_id', '=', $topic->id)
                         ->where('id','!=', $originalPost->id)
                         ->get()
@@ -41,12 +40,6 @@ class PostReplyController extends Controller
             $context['posts'] = $posts;
         }
         
-       
-
-        // $posts = Post::with(['user' => function($query) use($originalPost, $topic){
-        //     $query->where('topic_id', '=', $topic->id)
-        //     ->where('id','!=', $originalPost->id);
-        // }])->get();
 
         
         return view('posts.postReply', $context);
@@ -56,16 +49,20 @@ class PostReplyController extends Controller
             'postBody'=>'required'
         ]);
         $postBody = strip_tags($request->postBody);
-        
-        Post::create([
+
+        $postCreated = Post::create([
             'title'=>'Default title',
             'body' => $postBody,
             'user_id'=> $request->user()->id,
             'topic_id'=>$topic->id,
             'isOP'=> false,
             'replying_to_id'=>$post->id
-
         ]);
+
+        if($postCreated){
+            $post->user->notify(new HasRepliedToYou($post, $request->user()));
+        }
+
         return redirect()->route('posts', [$board, $topic]);
     }
 }

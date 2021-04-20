@@ -1,16 +1,23 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use App\Models\Post;
+use App\Models\User;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostDetailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TopicCreatorController;
+use App\Http\Controllers\TopicFilterController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\PostReplyController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TopicEditorController;
 use App\Http\Controllers\TopicDeleteController;
+use App\Http\Controllers\BoardJoinController;
+use App\Notifications\HasRepliedToYou;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,7 +42,11 @@ require __DIR__.'/auth.php';
 
 Route::get('/boards', [BoardController::class, 'listBoards'])->name('board');
 
+Route::post('/{board}/join', [BoardJoinController::class, 'joinBoard'])->name('joinBoard');
+
 Route::get('/{board}/topics', [TopicController::class, 'listTopics'])->name('topic');
+
+// Route::get('/{board}/topics/{filter}', [TopicFilterController::class, 'filterTopics'])->name('filterTopics');
 
 Route::get('/{board}/topics/create', [TopicCreatorController::class, 'index'])->name('createTopic');
 Route::post('/{board}/topics/create', [TopicCreatorController::class, 'createTopic']);
@@ -57,5 +68,11 @@ Route::post('/{board}/{topic}/{post}/reply', [PostReplyController::class, 'post'
 Route::post('/{board}/{topic}/{post}/like', [PostLikeController::class, 'like'])->name('postLike');
 
 Route::post('/{board}/{topic}/{post}/dislike', [PostLikeController::class, 'dislike'])->name('postDislike');
+
+// Route::get('/x', function(){
+//     $user = Auth::user();
+//     $user->notify(new HasRepliedToYou(Post::find(1), User::find(2) ));
+//     die;
+// });
 
 // Route::get('/posts/{post}', [PostDetailController::class, 'index'])->name('postDetail');

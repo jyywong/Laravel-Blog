@@ -18,7 +18,6 @@ class TopicController extends Controller
         ]);
     }
 
-        
-
+    
     
 }

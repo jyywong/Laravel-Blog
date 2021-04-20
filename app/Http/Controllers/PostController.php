@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\Board;
 use App\Models\Topic;
+use App\Notifications\HasRepliedToYou;
 
 class PostController extends Controller
 {
@@ -48,7 +49,7 @@ class PostController extends Controller
         ]);
         $postBody = strip_tags($request->postBody);
         
-        Post::create([
+        $postCreated = Post::create([
             'title'=>'Default title',
             'body' => $postBody,
             'user_id'=> $request->user()->id,
@@ -57,6 +58,9 @@ class PostController extends Controller
             'replying_to_id'=>$originalPost->id
 
         ]);
+        if($postCreated){
+            $originalPost->user->notify(new HasRepliedToYou($originalPost, $request->user()));
+        }
         return back();
     }
 }

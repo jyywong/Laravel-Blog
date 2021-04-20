@@ -27,6 +27,7 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
     public function totalUpvotes(){
-        return ($this->likes->where('vote_type', 'up')->count()) - ($this->likes->where('vote_type', 'down')->count()) ;
+        return ($this->likes->where('vote_type', 'up')->count()) - ($this->likes->where('vote_type', 'down')->count());
     }
+
 }
