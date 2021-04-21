@@ -14,7 +14,8 @@ class TopicController extends Controller
         // $OP = Post::where('topic_id', $this->id)->where('isOP', true)->get();
         return view('topics/topicList', [
             'topics'=> $topics,
-            'board'=> $board
+            'board'=> $board,
+            'filter' => ''
         ]);
     }
 

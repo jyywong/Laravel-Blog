@@ -62,7 +62,7 @@
         <div class="col">
                 <div class="card ">
                     <div class="card-header">
-                        r/{{$board->name}}
+                        <h5>r/{{$board->name}}</h5>
                     </div>
                     <div class="card-body">
                         {{$board->description}}

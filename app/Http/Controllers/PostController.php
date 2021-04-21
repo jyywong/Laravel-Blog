@@ -10,6 +10,10 @@ use App\Notifications\HasRepliedToYou;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only('post');
+    }
     public function index(Board $board, Topic $topic){
         $originalPost = Post::where('topic_id', '=', $topic->id)
         ->first();

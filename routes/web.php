@@ -35,9 +35,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
@@ -75,7 +72,5 @@ Route::post('/{board}/{topic}/{post}/dislike', [PostLikeController::class, 'disl
 
 Route::get('/notifications', [NotifsController::class, 'index'])->name('notifs');
 
-Route::get('/x', function(){
-    echo(Carbon::now());
-});
+
 

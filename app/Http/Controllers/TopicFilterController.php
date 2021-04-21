@@ -30,7 +30,7 @@ class TopicFilterController extends Controller
 
                 $filteredTopics = $OPs->map(function($post){
                     return Topic::find($post->topic_id);
-                });
+                })->paginate(5);
                 break;
             case 'hot':
                 $OPs = Post::withCount('likes')
@@ -43,13 +43,14 @@ class TopicFilterController extends Controller
 
                 $filteredTopics = $OPs->map(function($post){
                     return Topic::find($post->topic_id);
-                });
-                // ->whereBetween('created_at', [Carbon::now(), Carbon::now()->subDay()])
+                })->paginate(5);
                 break;
         }
         return view('topics/topicList', [
             'topics'=>$filteredTopics ,
-            'board'=> $board
+            'board'=> $board,
+            'filter'=> $filter
+
         ]);
     }
 }
