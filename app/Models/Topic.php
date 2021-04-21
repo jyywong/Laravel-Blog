@@ -10,8 +10,8 @@ class Topic extends Model
     use HasFactory;
     protected $fillable = [
         'topic',
-        'board_id'
-
+        'board_id',
+        'OPID'
     ];
     public function board(){
         return $this->belongsTo(Board::class);
@@ -26,7 +26,7 @@ class Topic extends Model
         return $this->hasOne(Post::class)->where('topic_id', $this->id)->where('isOP', true);
     }
     public function likes(){
-        return $this->hasManyThrough(Like::class, Post::class)->where('post_id', $this->getOP->id);
+        return $this->hasManyThrough(Like::class, Post::class)->join('topics', 'id', '=', 'posts.topic_id')->where('post_id', 'topics.OPID');
     }
 
    

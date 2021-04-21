@@ -34,6 +34,20 @@
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             @if (auth()->check())
+            <ul class="navbar-nav">
+              <a href="{{route('notifs')}}" style="text-decoration: none;color: inherit">
+                <li class="nav-item">
+                  Notifications 
+                  @if (Auth::user()->unreadNotifications->count())
+                    <span class="badge bg-primary">{{Auth::user()->unreadNotifications->count()}}</span> 
+                  @endif
+                  
+                </li>
+              </a>
+              
+            </ul>
+              
+
               <li class="nav-item dropdown d-flex">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   {{auth()->user()->name}}
@@ -71,6 +85,9 @@
 
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script>
+      feather.replace()
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>
 </html>

@@ -103,9 +103,9 @@
                 </div>
             </div>
         </div>
-        <div class="container justify content-center">
+        {{-- <div class="container justify content-center">
             {{$topics->withQueryString()->links()}}
-        </div>
+        </div> --}}
     </div>
     
     

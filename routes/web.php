@@ -17,6 +17,8 @@ use App\Http\Controllers\TopicEditorController;
 use App\Http\Controllers\TopicDeleteController;
 use App\Http\Controllers\BoardJoinController;
 use App\Notifications\HasRepliedToYou;
+use App\Http\Controllers\NotifsController;
+use Illuminate\Support\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,10 +48,12 @@ Route::post('/{board}/join', [BoardJoinController::class, 'joinBoard'])->name('j
 
 Route::get('/{board}/topics', [TopicController::class, 'listTopics'])->name('topic');
 
-// Route::get('/{board}/topics/{filter}', [TopicFilterController::class, 'filterTopics'])->name('filterTopics');
+
 
 Route::get('/{board}/topics/create', [TopicCreatorController::class, 'index'])->name('createTopic');
 Route::post('/{board}/topics/create', [TopicCreatorController::class, 'createTopic']);
+
+Route::get('/{board}/topics/{filter}', [TopicFilterController::class, 'filter'])->name('filterTopics');
 
 Route::get('/{board}/{topic}/edit', [TopicEditorController::class, 'index'])->name('editTopic');
 Route::post('/{board}/{topic}/edit', [TopicEditorController::class, 'edit']);
@@ -69,10 +73,9 @@ Route::post('/{board}/{topic}/{post}/like', [PostLikeController::class, 'like'])
 
 Route::post('/{board}/{topic}/{post}/dislike', [PostLikeController::class, 'dislike'])->name('postDislike');
 
-// Route::get('/x', function(){
-//     $user = Auth::user();
-//     $user->notify(new HasRepliedToYou(Post::find(1), User::find(2) ));
-//     die;
-// });
+Route::get('/notifications', [NotifsController::class, 'index'])->name('notifs');
 
-// Route::get('/posts/{post}', [PostDetailController::class, 'index'])->name('postDetail');
+Route::get('/x', function(){
+    echo(Carbon::now());
+});
+

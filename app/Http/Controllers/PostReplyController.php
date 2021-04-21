@@ -35,8 +35,10 @@ class PostReplyController extends Controller
         {     
 
             $posts = Post::with('user')->where('topic_id', '=', $topic->id)
-            ->where('id','!=', $originalPost->id)
-            ->get();
+                ->where('id','!=', $originalPost->id)
+                ->where('replying_to_id', null)
+                ->orWhere('replying_to_id', $originalPost->id)
+                ->paginate(5);
             $context['posts'] = $posts;
         }
         
@@ -60,7 +62,7 @@ class PostReplyController extends Controller
         ]);
 
         if($postCreated){
-            $post->user->notify(new HasRepliedToYou($post, $request->user()));
+            $post->user->notify(new HasRepliedToYou($postCreated, $request->user()));
         }
 
         return redirect()->route('posts', [$board, $topic]);

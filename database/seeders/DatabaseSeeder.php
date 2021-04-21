@@ -37,7 +37,8 @@ class DatabaseSeeder extends Seeder
         User::factory(30)->create();
         Board::factory(10)->create()->each(function($board){
             $board->topics()->saveMany(Topic::factory(10)->create()->each(function($topic){
-                $topic->posts()->save(Post::factory()->make(['isOP'=> true]));
+                $op = $topic->posts()->save(Post::factory()->make(['isOP'=> true]));
+                $topic->OPID = $op->id; 
                 $topic->posts()->saveMany(Post::factory(7)->make(['isOP'=>false]));
             }));
         });

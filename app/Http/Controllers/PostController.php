@@ -31,7 +31,9 @@ class PostController extends Controller
                 {     
                 $posts = Post::with('user')->where('topic_id', '=', $topic->id)
                 ->where('id','!=', $originalPost->id)
-                ->get();
+                ->where('replying_to_id', null)
+                ->orWhere('replying_to_id', $originalPost->id)
+                ->paginate(5);
                 $context['posts'] = $posts;
                 }
         }
@@ -59,7 +61,7 @@ class PostController extends Controller
 
         ]);
         if($postCreated){
-            $originalPost->user->notify(new HasRepliedToYou($originalPost, $request->user()));
+            $originalPost->user->notify(new HasRepliedToYou($postCreated, $request->user()));
         }
         return back();
     }

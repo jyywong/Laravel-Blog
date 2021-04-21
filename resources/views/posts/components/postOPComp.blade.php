@@ -4,7 +4,8 @@
             <h4>{{$topic->topic}}</h4>
         </div>
         <div class="card-body">
-            <p class="text-muted">Posted by {{$OP->user->name}}</p>
+            <p class="text-muted">Posted by u/{{$OP->user->name}}</p>
+            <img src="https://picsum.photos/300/200" alt="">
             <p class="card-text">{!!clean($OP->body)!!}</p>
         </div>
         <div class="card-footer">
@@ -15,11 +16,7 @@
                         <i data-feather="edit" style="margin-left: 30px"></i>
                         <small>Edit</small>
                     </a>
-                    {{-- <a href="{{route('deleteTopic', [$board, $topic])}}" style="text-decoration: none;color: inherit">
-                        <i data-feather="trash-2" style="margin-left: 30px"></i>
-                        <small>Delete</small>
-                    </a> --}}
-                    <!-- Button trigger modal -->
+
                 <button type="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <i data-feather="trash-2" style="margin-left: 30px"></i>
                         <small>Delete</small>

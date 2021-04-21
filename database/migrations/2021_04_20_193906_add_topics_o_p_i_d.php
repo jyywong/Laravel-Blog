@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddTopicsOPID extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('topics', function (Blueprint $table) {
+            $table->unsignedBigInteger('OPID')->nullable();
+            $table->foreign('OPID')->references('id')->on('posts');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('topics', function (Blueprint $table) {
+            $table->dropForeign(['OPID']);
+        });
+    }
+}
